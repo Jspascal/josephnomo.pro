@@ -90,7 +90,7 @@ const workExperience = ref([
         id: 'lead_backend_lab2view',
         title: 'Lead Backend',
         company: 'Lab2View Sarl',
-        period: 'Jan 2025 - Present',
+        period: 'Jun 2024 - Present',
         location: 'Douala V, Littoral, Cameroon · On-site',
         description: 'As the Lead Backend at Lab2View Sarl, I lead a talented team of developers focused on building innovative fintech solutions, bulk messaging applications, and comprehensive ERP systems. My role involves overseeing the entire development lifecycle, from initial concept through to final deployment, ensuring our technology aligns with business goals and delivers exceptional user experiences. I am committed to fostering a collaborative and dynamic environment where creativity and technical excellence thrive.',
         responsibilities: [
@@ -128,7 +128,7 @@ const workExperience = ref([
         id: 'backend_developer_lab2view',
         title: 'Backend Developer',
         company: 'Lab2View',
-        period: 'May 2023 - Jan 2025',
+        period: 'May 2023 - Jun 2024',
         location: 'Douala V, Littoral, Cameroon · Hybrid',
         description: 'Contributed to the migration of a monolithic mobile wallet application to a microservices architecture within a cross-functional team.',
         responsibilities: [
