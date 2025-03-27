@@ -1,0 +1,57 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DROPLET_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Droplet
+        run: |
+          rsync -avz --delete dist/ ${{ secrets.SSH_USER }}@${{ secrets.DROPLET_IP }}:${{ secrets.DEPLOY_PATH }}/
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.DROPLET_IP }} '
+            sudo nginx -t && 
+            sudo systemctl reload nginx
+          '
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Terraform Init
+        run: |
+          cd infrastructure
+          terraform init
+
+      - name: Terraform Apply
+        run: |
+          cd infrastructure
+          terraform apply -auto-approve \
+            -var="droplet_ip=${{ secrets.DROPLET_IP }}" \
+            -var="ssh_private_key=${{ secrets.SSH_PRIVATE_KEY }}" \
+            -var="ssh_user=${{ secrets.SSH_USER }}" \
+            -var="deploy_path=${{ secrets.DEPLOY_PATH }}"
