@@ -9,25 +9,33 @@
           My technical expertise and proficiencies
         </p>
       </div>
-      
+
       <div class="terminal-card main-card">
         <div class="card-header">
           <span class="command">$ ls -la ~/skills</span>
         </div>
         <div class="card-content">
           <div class="skills-grid">
-            <div class="skill-category" v-for="(category, index) in skillCategories" :key="index">
+            <div
+              class="skill-category"
+              v-for="(category, index) in skillCategories"
+              :key="index"
+            >
               <div class="category-header">
                 <component :is="category.icon" class="category-icon" />
                 <h3 class="category-title">{{ category.name }}</h3>
               </div>
-              
+
               <div class="skill-groups">
-                <div class="skill-group" v-for="(group, groupIndex) in category.groups" :key="groupIndex">
+                <div
+                  class="skill-group"
+                  v-for="(group, groupIndex) in category.groups"
+                  :key="groupIndex"
+                >
                   <h4 class="group-title">{{ group.level }}</h4>
                   <div class="skill-tags">
-                    <div 
-                      v-for="(skill, skillIndex) in group.skills" 
+                    <div
+                      v-for="(skill, skillIndex) in group.skills"
                       :key="skillIndex"
                       class="skill-tag"
                     >
@@ -40,7 +48,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="terminal-card tools-card">
         <div class="card-header">
           <span class="command">$ cat tools-and-technologies.txt</span>
@@ -48,8 +56,8 @@
         <div class="card-content">
           <div class="tools-section">
             <div class="tools-grid">
-              <div 
-                v-for="(tool, index) in tools" 
+              <div
+                v-for="(tool, index) in tools"
                 :key="index"
                 class="tool-item"
               >
@@ -59,7 +67,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="terminal-card workflow-card">
         <div class="card-header">
           <span class="command">$ cat development-workflow.md</span>
@@ -67,7 +75,11 @@
         <div class="card-content">
           <div class="workflow-section">
             <div class="workflow-steps">
-              <div class="workflow-step" v-for="(step, index) in workflow" :key="index">
+              <div
+                class="workflow-step"
+                v-for="(step, index) in workflow"
+                :key="index"
+              >
                 <div class="step-number">{{ index + 1 }}</div>
                 <div class="step-content">
                   <h3 class="step-title">{{ step.title }}</h3>
@@ -83,134 +95,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 // import { ServerIcon, DatabaseIcon, GitBranchIcon, TerminalIcon, CodeIcon, GlobeIcon, ExternalLinkIcon } from 'lucide-vue-next';
+import { skillCategoriesData, toolsData, workflowData } from "@/data/skills";
 
-const skillCategories = ref([
-  {
-    name: 'Backend Development',
-    icon: 'ServerIcon',
-    groups: [
-      {
-        level: 'Advanced',
-        skills: ['PHP', 'Laravel', 'Node.js', 'Express', 'REST APIs']
-      },
-      {
-        level: 'Intermediate',
-        skills: ['Python', 'Microservices', 'WebSockets']
-      },
-      {
-        level: 'Familiar',
-        skills: ['Java', 'Spring Boot', 'Symfony']
-      }
-    ]
-  },
-  {
-    name: 'Databases',
-    icon: 'DatabaseIcon',
-    groups: [
-      {
-        level: 'Advanced',
-        skills: ['MySQL', 'PostgreSQL', 'Redis']
-      },
-      {
-        level: 'Intermediate',
-        skills: ['MongoDB', 'SQLite']
-      },
-      {
-        level: 'Familiar',
-        skills: ['Oracle', 'Elasticsearch']
-      }
-    ]
-  },
-  {
-    name: 'DevOps & Infrastructure',
-    icon: 'GitBranchIcon',
-    groups: [
-      {
-        level: 'Advanced',
-        skills: ['Docker', 'Linux', 'Nginx']
-      },
-      {
-        level: 'Intermediate',
-        skills: ['AWS (EC2, ECS)', 'CI/CD Pipelines', 'GitLab CI', 'Bitbucket Pipelines']
-      },
-      {
-        level: 'Familiar',
-        skills: ['Terraform', 'Kubernetes']
-      }
-    ]
-  },
-  {
-    name: 'API Development',
-    icon: 'CodeIcon',
-    groups: [
-      {
-        level: 'Advanced',
-        skills: ['RESTful Design', 'API Gateway', 'Authentication/JWT']
-      },
-      {
-        level: 'Intermediate',
-        skills: ['Swagger/OpenAPI', 'API Versioning', 'Rate Limiting']
-      },
-      {
-        level: 'Familiar',
-        skills: ['GraphQL', 'OAuth2']
-      }
-    ]
-  },
-  {
-    name: 'Web Technologies',
-    icon: 'GlobeIcon',
-    groups: [
-      {
-        level: 'Advanced',
-        skills: ['JavaScript', 'TypeScript']
-      },
-      {
-        level: 'Intermediate',
-        skills: ['Vue.js', 'HTML/CSS']
-      }
-    ]
-  }
-]);
-
-const tools = ref([
-  'Git', 'GitHub', 'Bitbucket', 'Jira', 'Jenkins', 'Travis CI', 
-  'Nginx', 'Apache', 'RabbitMQ', 'Postman', 'Insomnia', 'VS Code',
-  'PHPStorm', 'Docker Compose', 'AWS CodePipeline', 'Bash Scripting'
-]);
-
-const workflow = ref([
-  {
-    title: 'Requirements Analysis',
-    description: 'Thoroughly understand project requirements and business needs through stakeholder interviews and documentation review.'
-  },
-  {
-    title: 'System Design',
-    description: 'Create architecture diagrams, database schemas, and API specifications before implementation.'
-  },
-  {
-    title: 'Development Environment Setup',
-    description: 'Configure containerized development environments with Docker to ensure consistency across the team.'
-  },
-  {
-    title: 'Iterative Development',
-    description: 'Build features incrementally using test-driven development practices and regular code reviews.'
-  },
-  {
-    title: 'Continuous Integration',
-    description: 'Implement automated testing and deployment pipelines to ensure code quality and reliability.'
-  },
-  {
-    title: 'Documentation',
-    description: 'Create comprehensive technical documentation, API references, and usage examples.'
-  },
-  {
-    title: 'Monitoring & Optimization',
-    description: 'Set up monitoring tools and performance metrics to identify and resolve bottlenecks.'
-  }
-]);
+const skillCategories = ref(skillCategoriesData);
+const tools = ref(toolsData);
+const workflow = ref(workflowData);
 </script>
 
 <style scoped>
@@ -224,7 +115,7 @@ const workflow = ref([
 }
 
 .section-title {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -264,7 +155,7 @@ const workflow = ref([
 }
 
 .command {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   color: var(--accent-primary);
   font-size: 0.875rem;
 }
@@ -298,7 +189,7 @@ const workflow = ref([
 }
 
 .category-title {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-size: 1.25rem;
   color: var(--text-primary);
 }
@@ -316,7 +207,7 @@ const workflow = ref([
 }
 
 .group-title {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-size: 0.875rem;
   color: var(--text-secondary);
   position: relative;
@@ -324,7 +215,7 @@ const workflow = ref([
 }
 
 .group-title::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
@@ -360,7 +251,7 @@ const workflow = ref([
   color: var(--text-primary);
   padding: 0.5rem 0.75rem;
   border-radius: 0.25rem;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-size: 0.875rem;
   transition: all 0.2s;
   border-left: 3px solid;
@@ -399,7 +290,7 @@ const workflow = ref([
   color: var(--text-primary);
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-size: 0.875rem;
   transition: all 0.2s;
   border: 1px solid var(--border-color);
@@ -443,7 +334,7 @@ const workflow = ref([
   background-color: var(--accent-primary);
   color: white;
   border-radius: 50%;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -453,7 +344,7 @@ const workflow = ref([
 }
 
 .step-title {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-size: 1.125rem;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
@@ -470,4 +361,3 @@ const workflow = ref([
   }
 }
 </style>
-
