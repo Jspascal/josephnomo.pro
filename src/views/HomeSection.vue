@@ -6,7 +6,7 @@
                     <h1 class="hero-title">
                         <span class="greeting">Hello, I'm</span>
                         <span class="name">Joseph Nomo</span>
-                        <span class="role">Backend Developer & System Engineer</span>
+                        <span class="role">Backend Developer</span>
                     </h1>
                     <p class="hero-description">
                         I build robust backend systems and server infrastructure that power modern applications.
@@ -27,11 +27,6 @@
                     </div>
                     <div class="terminal-body">
                         <div class="terminal-line">
-                            <span class="prompt">$</span> whoami
-                        </div>
-                        <div class="terminal-output">Joseph Nomo</div>
-
-                        <div class="terminal-line">
                             <span class="prompt">$</span> cat skills.txt
                         </div>
                         <div class="terminal-output">
@@ -43,12 +38,22 @@
                         </div>
 
                         <div class="terminal-line">
-                            <span class="prompt">$</span> ls projects/
+                            <span class="prompt">$</span> cat spotify-playlist <span
+                                class="cursor"></span>
                         </div>
                         <div class="terminal-output">
-                            <div class="file">gveo/</div>
-                            <div class="file">be-wallet/</div>
-                            <div class="file">sopaki/</div>
+                            <div class="spotify-embed">
+                                <iframe 
+                                    style="border-radius:12px" 
+                                    src="https://open.spotify.com/embed/playlist/75j6aABzOEi30NvAvnajow?utm_source=generator" 
+                                    width="100%" 
+                                    height="352" 
+                                    frameBorder="0" 
+                                    allowfullscreen="" 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
                         </div>
 
                         <div class="terminal-line">
@@ -307,13 +312,35 @@ import { ServerIcon, DatabaseIcon, CpuIcon } from 'lucide-vue-next';
     line-height: 1.6;
 }
 
-@media (max-width: 992px) {
+.spotify-embed {
+    margin: 1rem 0;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.spotify-embed iframe {
+    display: block;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
     .hero {
         grid-template-columns: 1fr;
     }
 
     .highlights {
         grid-template-columns: 1fr;
+    }
+
+    .spotify-embed {
+        height: 250px;
+    }
+    
+    .spotify-embed iframe {
+        height: 250px;
     }
 }
 

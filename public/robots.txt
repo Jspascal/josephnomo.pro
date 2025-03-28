@@ -1,0 +1,27 @@
+# https://josephnomo.pro/robots.txt
+# Allow crawling of all content
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://josephnomo.pro/sitemap.xml
+
+# Disallow API endpoints if any
+Disallow: /api/
+
+# Optional: Add crawl delay
+Crawl-delay: 10
+
+# Block specific bots (optional)
+User-agent: BadBot
+Disallow: /
+
+# Allow useful bots explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /

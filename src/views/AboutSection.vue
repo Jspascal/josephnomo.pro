@@ -12,9 +12,6 @@
 
             <div class="about-content">
                 <div class="about-image">
-                    <div class="image-container">
-                        <img src="/my-pic.jpg" alt="Joseph Nomo" />
-                    </div>
                     <div class="terminal-decoration">
                         <div class="terminal-header">
                             <div class="terminal-buttons">
@@ -24,6 +21,9 @@
                             </div>
                             <div class="terminal-title">profile.jpg</div>
                         </div>
+                    </div>
+                    <div class="image-container">
+                        <img src="/my-pic.jpg" alt="Joseph Nomo" />
                     </div>
                 </div>
 
@@ -139,6 +139,9 @@
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    margin-top: 1.5rem;
 }
 
 .image-container img {
@@ -149,16 +152,16 @@
 
 .terminal-decoration {
     position: absolute;
-    top: -1rem;
-    left: -1rem;
-    right: 1rem;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 2.5rem;
     background-color: var(--bg-secondary);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border: 1px solid var(--border-color);
     border-bottom: none;
-    z-index: -1;
+    z-index: 2;
 }
 
 .terminal-header {
@@ -300,3 +303,4 @@ p {
     }
 }
 </style>
+
