@@ -2,15 +2,25 @@
   <div class="app">
     <TheNavbar />
     <main class="main-content">
-      <router-view />
+      <page-transition>
+        <router-view />
+      </page-transition>
     </main>
     <TheFooter />
   </div>
 </template>
 
 <script setup>
-import TheNavbar from '@/components/TheNavBar.vue';
-import TheFooter from '@/components/TheFooter.vue';
+import { onMounted } from "vue";
+import TheNavbar from "@/components/TheNavBar.vue";
+import TheFooter from "@/components/TheFooter.vue";
+import PageTransition from "@/components/common/PageTransition.vue";
+import { ThemeService } from "@/services/theme";
+
+onMounted(() => {
+  // Initialize theme
+  ThemeService.initTheme();
+});
 </script>
 
 <style>
@@ -24,4 +34,3 @@ import TheFooter from '@/components/TheFooter.vue';
   flex: 1;
 }
 </style>
-
