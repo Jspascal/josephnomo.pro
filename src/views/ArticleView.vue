@@ -97,13 +97,11 @@ const article = computed(() => {
   return articleData.value;
 });
 
-// Convert markdown to HTML
 const formattedContent = computed(() => {
   if (!article.value) return "";
   return marked(article.value.content);
 });
 
-// Share URLs
 const currentUrl = computed(() => {
   return `${window.location.origin}/blog/${slug.value}`;
 });
@@ -125,7 +123,6 @@ const linkedinShareUrl = computed(() => {
 const loadArticle = async () => {
   loading.value = true;
 
-  // Simulate network delay
   setTimeout(() => {
     articleData.value = getArticleBySlug(articlesData, slug.value);
     loading.value = false;
@@ -137,7 +134,6 @@ const loadArticle = async () => {
   }, 300);
 };
 
-// Update article when slug changes
 watch(slug, () => {
   loadArticle();
 });

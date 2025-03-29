@@ -18,7 +18,6 @@ import PageTransition from "@/components/common/PageTransition.vue";
 import { ThemeService } from "@/services/theme";
 
 onMounted(() => {
-  // Initialize theme
   ThemeService.initTheme();
 });
 </script>

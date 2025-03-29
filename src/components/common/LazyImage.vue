@@ -52,7 +52,6 @@ const onImageLoaded = () => {
 };
 
 onMounted(() => {
-  // Preload the image
   const img = new Image();
   img.src = props.src;
 

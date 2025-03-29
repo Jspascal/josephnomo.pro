@@ -77,7 +77,6 @@ const toggleTheme = () => {
 };
 
 onMounted(() => {
-  // Initialize theme
   const theme = ThemeService.initTheme();
   isDarkMode.value = theme === "dark";
 });

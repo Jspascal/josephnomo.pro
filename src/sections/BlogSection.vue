@@ -48,7 +48,6 @@ onMounted(async () => {
   useHead(generateSEOMeta(null));
   document.title = "Blog - Joseph Nomo";
 
-  // Simulate network delay to show loading state
   setTimeout(() => {
     articles.value = articlesData;
     loading.value = false;

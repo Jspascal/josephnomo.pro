@@ -68,7 +68,6 @@ const extractPathFromUrl = () => {
 onMounted(() => {
   document.title = "404 - Page Not Found";
 
-  // Set meta tags for 404 page
   useHead({
     title: "404 - Page Not Found",
     meta: [
