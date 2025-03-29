@@ -19,8 +19,6 @@ export const articlesData = [
     readTime: "15 min read",
     lastUpdated: "2025-03-28",
     content: `
-# Building Resilient Microservices Communication with Redis Event Streams
-
 In a microservices architecture, reliable communication between services is crucial. Traditional REST APIs create tight coupling, while message queues can lead to message loss if not properly configured. Redis Streams offers a compelling alternative, providing persistent, ordered event logs with consumer group support.
 
 ## The Challenge
@@ -399,8 +397,6 @@ This approach has significantly improved the reliability of GVEO's microservices
     readTime: "12 min read",
     lastUpdated: "2025-03-20",
     content: `
-# Building Spatial Data Tables for Fleet Analytics
-
 In a microservices architecture, data is distributed across multiple services, making analytics and reporting challenging. Each service owns its domain data, but comprehensive analytics often require data from multiple domains. Traditional approaches like joining tables across services lead to performance issues and tight coupling.
 
 ## The Challenge
@@ -1063,8 +1059,6 @@ The spatial data approach has proven so successful that I've applied it to other
     readTime: "10 min read",
     lastUpdated: "2025-03-20",
     content: `
-# Enhancing Laravel Event Systems with the Strategy Pattern
-
 Laravel provides powerful event systems, subscribers, and notifications out of the box. However, as applications grow in complexity, these systems can become difficult to maintain and extend. The Strategy Pattern offers an elegant solution to these challenges.
 
 ## The Problem
