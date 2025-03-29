@@ -1,65 +1,32 @@
 export const generateSEOMeta = (article) => {
+  if (!article) {
+    return {
+      title: "Portfolio - Joseph Nomo",
+      meta: [
+        {
+          name: "description",
+          content:
+            "Technical articles and case studies from my experience as a backend developer",
+        },
+      ],
+    };
+  }
+
   return {
-    title: article ? `${article.title} - Joseph Nomo` : "Blog - Joseph Nomo",
+    title: `${article.title} - Joseph Nomo's Portfolio`,
     meta: [
-      {
-        name: "description",
-        content: article
-          ? article.summary
-          : "Technical articles and case studies from my experience in software engineering and system architecture.",
-      },
-      {
-        property: "og:title",
-        content: article ? article.title : "Blog - Joseph Nomo",
-      },
-      {
-        property: "og:description",
-        content: article
-          ? article.summary
-          : "Technical articles and case studies from my experience in software engineering and system architecture.",
-      },
-      {
-        property: "og:type",
-        content: "article",
-      },
-      {
-        property: "og:image",
-        content: article ? article.image : "/default-og-image.png",
-      },
-      {
-        name: "twitter:card",
-        content: "summary_large_image",
-      },
-      {
-        name: "twitter:title",
-        content: article ? article.title : "Blog - Joseph Nomo",
-      },
-      {
-        name: "twitter:description",
-        content: article
-          ? article.summary
-          : "Technical articles and case studies from my experience in software engineering and system architecture.",
-      },
-      {
-        name: "twitter:image",
-        content: article ? article.image : "/default-og-image.png",
-      },
-      {
-        property: "article:published_time",
-        content: article ? new Date(article.date).toISOString() : null,
-      },
-      {
-        property: "article:author",
-        content: "Joseph Nomo",
-      },
-      {
-        property: "article:section",
-        content: article ? article.category : "Technology",
-      },
-      {
-        property: "article:tag",
-        content: article ? article.tags.join(", ") : "",
-      },
-    ].filter((meta) => meta.content !== null),
+      { name: "description", content: article.summary },
+      { name: "keywords", content: article.tags.join(", ") },
+      // Open Graph
+      { property: "og:title", content: article.title },
+      { property: "og:description", content: article.summary },
+      { property: "og:type", content: "article" },
+      { property: "og:image", content: article.image },
+      // Twitter
+      { name: "twitter:title", content: article.title },
+      { name: "twitter:description", content: article.summary },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: article.image },
+    ],
   };
 };
