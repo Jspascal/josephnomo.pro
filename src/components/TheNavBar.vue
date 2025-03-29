@@ -1,232 +1,174 @@
 <template>
-  <header class="navbar">
+  <nav class="navbar">
     <div class="container">
-      <div class="navbar-content">
-        <router-link to="/" class="logo">
-          <span class="logo-prefix">~/</span>joseph_nomo
+      <div class="navbar-brand">
+        <router-link to="/" class="navbar-logo">
+          <span class="logo-text">~/joseph_nomo</span>
         </router-link>
+      </div>
 
-        <button
-          class="mobile-menu-toggle"
-          @click="toggleMobileMenu"
-          aria-label="Toggle menu"
+      <div class="navbar-menu" :class="{ 'is-active': isMenuOpen }">
+        <router-link to="/" class="navbar-item" @click="closeMenu"
+          >Home</router-link
         >
-          <menu-icon v-if="!mobileMenuOpen" class="menu-icon" />
-          <x-icon v-else class="menu-icon" />
+        <router-link to="/about" class="navbar-item" @click="closeMenu"
+          >About</router-link
+        >
+        <router-link to="/projects" class="navbar-item" @click="closeMenu"
+          >Projects</router-link
+        >
+        <router-link to="/skills" class="navbar-item" @click="closeMenu"
+          >Skills</router-link
+        >
+        <router-link to="/blog" class="navbar-item" @click="closeMenu"
+          >Blog</router-link
+        >
+        <router-link to="/contact" class="navbar-item" @click="closeMenu"
+          >Contact</router-link
+        >
+      </div>
+
+      <div class="navbar-actions">
+        <button
+          class="theme-toggle"
+          @click="toggleTheme"
+          aria-label="Toggle dark mode"
+        >
+          <sun-icon v-if="isDarkMode" class="theme-icon" />
+          <moon-icon v-else class="theme-icon" />
         </button>
 
-        <nav class="nav-desktop" :class="{ active: mobileMenuOpen }">
-          <ul class="nav-list">
-            <li v-for="(item, index) in navItems" :key="index" class="nav-item">
-              <router-link
-                :to="item.path"
-                class="nav-link"
-                @click="closeMobileMenu"
-              >
-                {{ item.name }}
-              </router-link>
-            </li>
-          </ul>
-
-          <div class="theme-toggle">
-            <button
-              @click="toggleTheme"
-              class="theme-btn"
-              aria-label="Toggle theme"
-            >
-              <sun-icon v-if="isDarkMode" class="theme-icon" />
-              <moon-icon v-else class="theme-icon" />
-            </button>
-          </div>
-        </nav>
+        <div class="navbar-burger" @click="toggleMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
-  </header>
+  </nav>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "vue";
-import { useRouter } from "vue-router";
-import { SunIcon, MoonIcon, MenuIcon, XIcon } from "lucide-vue-next";
-import { useMobile } from "@/hooks/use-mobile";
+import { ref, onMounted } from "vue";
+import { SunIcon, MoonIcon } from "lucide-vue-next";
+import { ThemeService } from "@/services/theme";
 
-const isDarkMode = ref(false);
-const mobileMenuOpen = ref(false);
-const { isMobile } = useMobile();
-const router = useRouter();
+const isMenuOpen = ref(false);
+const isDarkMode = ref(ThemeService.isDarkMode());
 
-const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Skills", path: "/skills" },
-  { name: "Experience", path: "/experience" },
-  { name: "Projects", path: "/projects" },
-  { name: "Blog", path: "/blog" },
-  { name: "Contact", path: "/contact" },
-];
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
 
-const toggleTheme = () => {
-  isDarkMode.value = !isDarkMode.value;
-  document.documentElement.classList.toggle("dark", isDarkMode.value);
-  localStorage.setItem("theme", isDarkMode.value ? "dark" : "light");
-};
-
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value;
-  updateBodyScroll();
-};
-
-const closeMobileMenu = () => {
-  if (mobileMenuOpen.value) {
-    mobileMenuOpen.value = false;
-    updateBodyScroll();
-  }
-};
-
-const updateBodyScroll = () => {
-  if (mobileMenuOpen.value) {
-    document.body.style.top = `-${window.scrollY}px`;
+  if (isMenuOpen.value) {
     document.body.classList.add("no-scroll");
   } else {
-    const scrollY = document.body.style.top;
     document.body.classList.remove("no-scroll");
-    document.body.style.top = "";
-    if (scrollY) {
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    }
   }
 };
 
-watch(
-  () => router.currentRoute.value,
-  () => {
-    closeMobileMenu();
-  }
-);
+const closeMenu = () => {
+  isMenuOpen.value = false;
+  document.body.classList.remove("no-scroll");
+};
 
-watch(isMobile, (newValue) => {
-  if (!newValue && mobileMenuOpen.value) {
-    closeMobileMenu();
-  }
-});
-
-const handleEscKey = (e) => {
-  if (e.key === "Escape" && mobileMenuOpen.value) {
-    closeMobileMenu();
-  }
+const toggleTheme = () => {
+  const newTheme = ThemeService.toggleTheme();
+  isDarkMode.value = newTheme === "dark";
 };
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  if (savedTheme === "dark" || (savedTheme === null && prefersDark)) {
-    isDarkMode.value = true;
-    document.documentElement.classList.add("dark");
-  }
-
-  document.addEventListener("keydown", handleEscKey);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("keydown", handleEscKey);
-  if (mobileMenuOpen.value) {
-    document.body.classList.remove("no-scroll");
-    document.body.style.top = "";
-  }
+  // Initialize theme
+  const theme = ThemeService.initTheme();
+  isDarkMode.value = theme === "dark";
 });
 </script>
 
 <style scoped>
 .navbar {
+  background-color: var(--bg-primary);
+  padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
-  padding: 1rem 0;
 }
 
-.navbar-content {
+.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.logo {
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
   font-family: "Fira Code", monospace;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-item {
+  font-family: "Fira Code", monospace;
   color: var(--text-primary);
   text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-.logo-prefix {
-  color: var(--accent-primary);
-  margin-right: 0.25rem;
-}
-
-.nav-desktop {
-  display: flex;
-  align-items: center;
-}
-
-.nav-list {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-item {
-  margin-left: 1.5rem;
-}
-
-.nav-link {
-  font-family: "Fira Code", monospace;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.875rem;
-  transition: color 0.2s;
+  font-size: 1rem;
   position: relative;
-  padding: 0.5rem 0;
+  transition: color 0.3s ease;
 }
 
-.nav-link:hover,
-.nav-link.router-link-active {
+.navbar-item:hover,
+.navbar-item.router-link-active {
   color: var(--accent-primary);
 }
 
-.nav-link.router-link-active::after {
+.navbar-item.router-link-active::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: -5px;
   left: 0;
   width: 100%;
   height: 2px;
   background-color: var(--accent-primary);
 }
 
-.theme-toggle {
-  margin-left: 2rem;
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.theme-btn {
+.theme-toggle {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--text-secondary);
-  padding: 0.5rem;
-  border-radius: 0.375rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--text-primary);
   transition: all 0.2s;
 }
 
-.theme-btn:hover {
+.theme-toggle:hover {
   background-color: var(--bg-secondary);
   color: var(--accent-primary);
 }
@@ -236,67 +178,52 @@ onUnmounted(() => {
   height: 1.25rem;
 }
 
-.mobile-menu-toggle {
+.navbar-burger {
   display: none;
-  background: none;
-  border: none;
-  color: var(--text-primary);
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.375rem;
 }
 
-.menu-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+.navbar-burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--text-primary);
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
 }
 
 @media (max-width: 768px) {
-  .mobile-menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nav-desktop {
+  .navbar-menu {
     position: fixed;
-    top: 4rem; /* Height of navbar */
+    top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100vh;
     background-color: var(--bg-primary);
     flex-direction: column;
-    justify-content: flex-start;
-    padding: 2rem;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 99;
-    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 90;
   }
 
-  .nav-desktop.active {
+  .navbar-menu.is-active {
     transform: translateX(0);
   }
 
-  .nav-list {
-    flex-direction: column;
-    width: 100%;
+  .navbar-burger {
+    display: flex;
+    z-index: 100;
   }
 
-  .nav-item {
-    margin: 0;
-    width: 100%;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .nav-link {
-    display: block;
-    padding: 1rem 0;
-    font-size: 1.25rem;
-  }
-
-  .theme-toggle {
-    margin: 2rem 0 0 0;
+  .navbar-item {
+    font-size: 1.5rem;
+    margin: 1rem 0;
   }
 }
 </style>
