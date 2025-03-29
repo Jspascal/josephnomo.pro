@@ -13,60 +13,50 @@
             modern applications.
           </p>
           <div class="hero-actions">
-            <router-link to="/projects" class="btn btn-primary"
-              >View Projects</router-link
-            >
-            <router-link to="/contact" class="btn btn-secondary"
-              >Contact Me</router-link
-            >
+            <primary-button to="/projects">View Projects</primary-button>
+            <secondary-button to="/contact">Contact Me</secondary-button>
           </div>
         </div>
         <div class="hero-terminal">
-          <div class="terminal-header">
-            <div class="terminal-buttons">
-              <span class="terminal-button"></span>
-              <span class="terminal-button"></span>
-              <span class="terminal-button"></span>
-            </div>
-            <div class="terminal-title">joseph@nomo:~</div>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line">
-              <span class="prompt">$</span> cat skills.txt
-            </div>
-            <div class="terminal-output">
-              <span class="skill-tag">Backend Development</span>
-              <span class="skill-tag">System Architecture</span>
-              <span class="skill-tag">Database Design</span>
-              <span class="skill-tag">API Development</span>
-              <span class="skill-tag">Server Management</span>
-            </div>
+          <terminal-card command="joseph@nomo:~" :show-buttons="true">
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <span class="prompt">$</span> cat skills.txt
+              </div>
+              <div class="terminal-output">
+                <span class="skill-tag">Backend Development</span>
+                <span class="skill-tag">System Architecture</span>
+                <span class="skill-tag">Database Design</span>
+                <span class="skill-tag">API Development</span>
+                <span class="skill-tag">Server Management</span>
+              </div>
 
-            <div class="terminal-line">
-              <span class="prompt">$</span> cat spotify-playlist
-            </div>
-            <div class="terminal-output">
-              <div class="spotify-embed">
-                <iframe
-                  style="border-radius: 12px"
-                  src="https://open.spotify.com/embed/playlist/75j6aABzOEi30NvAvnajow?utm_source=generator"
-                  width="100%"
-                  height="352"
-                  frameBorder="0"
-                  allowfullscreen=""
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                >
-                </iframe>
+              <div class="terminal-line">
+                <span class="prompt">$</span> cat spotify-playlist
+              </div>
+              <div class="terminal-output">
+                <div class="spotify-embed">
+                  <iframe
+                    style="border-radius: 12px"
+                    src="https://open.spotify.com/embed/playlist/75j6aABzOEi30NvAvnajow?utm_source=generator"
+                    width="100%"
+                    height="352"
+                    frameBorder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  >
+                  </iframe>
+                </div>
+              </div>
+
+              <div class="terminal-line">
+                <span class="prompt">$</span>
+                <span class="typing-text">get-in-touch</span>
+                <span class="cursor"></span>
               </div>
             </div>
-
-            <div class="terminal-line">
-              <span class="prompt">$</span>
-              <span class="typing-text">get-in-touch</span
-              ><span class="cursor"></span>
-            </div>
-          </div>
+          </terminal-card>
         </div>
       </div>
 
@@ -104,6 +94,9 @@
 
 <script setup>
 import { ServerIcon, DatabaseIcon, CpuIcon } from "lucide-vue-next";
+import TerminalCard from "@/components/common/TerminalCard.vue";
+import PrimaryButton from "@/components/common/PrimaryButton.vue";
+import SecondaryButton from "@/components/common/SecondaryButton.vue";
 </script>
 
 <style scoped>
@@ -162,75 +155,7 @@ import { ServerIcon, DatabaseIcon, CpuIcon } from "lucide-vue-next";
   margin-top: 0.5rem;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.375rem;
-  font-family: "Fira Code", monospace;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.btn-primary {
-  background-color: var(--accent-primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-secondary);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-}
-
-.btn-secondary:hover {
-  background-color: var(--bg-secondary);
-}
-
-.hero-terminal {
-  background-color: var(--card-bg);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--card-border);
-}
-
-.terminal-header {
-  background-color: var(--bg-secondary);
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.terminal-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-right: 1rem;
-}
-
-.terminal-button {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: var(--text-secondary);
-  opacity: 0.5;
-}
-
-.terminal-title {
-  font-family: "Fira Code", monospace;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
 .terminal-body {
-  padding: 1.5rem;
   font-family: "Fira Code", monospace;
   font-size: 0.875rem;
 }
@@ -259,11 +184,6 @@ import { ServerIcon, DatabaseIcon, CpuIcon } from "lucide-vue-next";
   border-radius: 0.25rem;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
-}
-
-.file {
-  color: var(--accent-secondary);
-  margin-bottom: 0.25rem;
 }
 
 .typing-text {
@@ -333,6 +253,16 @@ import { ServerIcon, DatabaseIcon, CpuIcon } from "lucide-vue-next";
 .spotify-embed iframe {
   display: block;
   width: 100%;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {
